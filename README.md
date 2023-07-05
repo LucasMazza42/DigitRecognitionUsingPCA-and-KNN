@@ -59,25 +59,25 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
   - In our code, we will find this by taking each eigen_value for each vector and dividing it by the total variance in the dataset
   - This is where the diagram comes from before, and shows why I choose to use n_components = 50
 
-`def explained_varience_ratio(self, X)->None: 
+        `def explained_varience_ratio(self, X)->None: 
+                
+                covarienceMat = self.findCovMatrix(X)
+                eigen_values, eigen_vectors = self.eigenValueVec(covarienceMat)
         
-        covarienceMat = self.findCovMatrix(X)
-        eigen_values, eigen_vectors = self.eigenValueVec(covarienceMat)
-
-        total_egnvalues = sum(eigen_values)
-        explained_variance_ratio = [(i/total_egnvalues) for i in eigen_values]
-       
-        explained_variance_ratio = explained_variance_ratio[0:50]
-        #we can use 50 components here
-
-        #plot the explained variance
-        plt.plot(explained_variance_ratio,
-             label='Explained Variance Ratio')
-
-        plt.xlabel('Principal Component')
-        plt.ylabel('Explained Variance Ratio')
-        plt.legend()
-        plt.show() ` 
+                total_egnvalues = sum(eigen_values)
+                explained_variance_ratio = [(i/total_egnvalues) for i in eigen_values]
+               
+                explained_variance_ratio = explained_variance_ratio[0:50]
+                #we can use 50 components here
+        
+                #plot the explained variance
+                plt.plot(explained_variance_ratio,
+                     label='Explained Variance Ratio')
+        
+                plt.xlabel('Principal Component')
+                plt.ylabel('Explained Variance Ratio')
+                plt.legend()
+                plt.show() ` 
 - Now we need to fit the data with 50 components
         - NOTE: using more components might improve accuracy, but we are looking to balance the trade-off of accuracy vs speed. 
 - We are going to repeat the process from before, but now we are going to sort the eigen_values list in order to find the eigen_values that explain the most amount of variance in the data.
