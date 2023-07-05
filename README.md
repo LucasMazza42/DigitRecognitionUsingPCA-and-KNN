@@ -3,7 +3,8 @@
 For this small project, I used sklearn's KNN and PCA done with numpy to create a model for digit recognition. The decision to use PCA in addition to KNN was to improve computation time, and it also improved accuracy over just the use of KNN. Another note here is that I coded PCA from scratch. 
 
 # Here is a quick summary: 
-The choice to use 50 components was used due to a drop off in explained variance after 50 as shown here: <img width="688" alt="Screen Shot 2022-12-03 at 9 43 15 AM" src="https://user-images.githubusercontent.com/47802441/210004567-ccdd9aeb-7dcf-4eeb-9576-004ee7de3856.png">
+The choice to use 50 components was used due to a drop off in explained variance after 50 as shown here: <img width="629" alt="Screenshot 2023-07-05 at 2 42 21 PM" src="https://github.com/LucasMazza42/DigitRecognitionUsingPCA-and-KNN/assets/47802441/f7beb466-d676-4014-b17e-fd2c27339e23">
+
 
 The model was able to achieve about 97% accuracy in training and a 95 percent accuracy in validation, which increases by about 1-2% over purely using KNN and cuts the computation time by about one second. 
 
@@ -24,7 +25,13 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
 
 `def __init__(self, n_components: int = None) -> None:
         self.n_components = n_components`
-        
+- A super important part before we begin is to normalize the data which can be done by scaling the matrix by the mean of the dataset: 
+        `def transform(self, X: np.array) -> np.array: 
+        #normalize
+        X=X-np.mean(X)
+        X_pca = np.dot(X, self.components)
+        return X_pca`
+- Now we can ensure that the data will not have scaling issues i.e. the values don't really matter 1 means the same as 5. 
 - This part of the code initializes how many components we are going to be working with
 - In PCA, this determines the dimensions of the dataset that we are working with.
 
@@ -47,6 +54,10 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
         eigen_values, eigen_vectors = np.linalg.eig(covMatrix)
         return (eigen_values.real, eigen_vectors.real)`
 - Next, we have the explained variance ratio:
+  - the explained variance ratio shows how much of the variance is explained by each principal.
+  - This helps us how many components we want to use!
+  - In our code, we will find this by taking each eigen_value for each vector and dividing it by the total variance in the dataset
+  - This is where the diagram comes from before, and shows why I choose to use n_components = 50
 
 `def explained_varience_ratio(self, X)->None: 
         
@@ -56,10 +67,10 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
         total_egnvalues = sum(eigen_values)
         explained_variance_ratio = [(i/total_egnvalues) for i in eigen_values]
        
-        explained_variance_ratio = explained_variance_ratio[0:100]
+        explained_variance_ratio = explained_variance_ratio[0:50]
         #we can use 50 components here
 
-        #plot the explainedVarience
+        #plot the explained variance
         plt.plot(explained_variance_ratio,
              label='Explained Variance Ratio')
 
@@ -67,6 +78,9 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
         plt.ylabel('Explained Variance Ratio')
         plt.legend()
         plt.show() ` 
+- Now we need to fit the data with 50 components
+        - NOTE: using more components might improve accuracy, but we are looking to balance the trade-off of accuracy vs speed. 
+- We are going to repeat the process from before, but now we are going to sort the eigen_values list in order to find the eigen_values that explain the most amount of variance in the data.
 
 
 
