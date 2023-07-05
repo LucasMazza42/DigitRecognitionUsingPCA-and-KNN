@@ -81,6 +81,7 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
 - Now we need to fit the data with 50 components
         - NOTE: using more components might improve accuracy, but we are looking to balance the trade-off of accuracy vs speed. 
 - We are going to repeat the process from before, but now we are going to sort the eigen_values list in order to find the eigen_values that explain the most amount of variance in the data.
+- Now we are finally ready to use the K-means classifier to group similar data points! 
 
 
 
