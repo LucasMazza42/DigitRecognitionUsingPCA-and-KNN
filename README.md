@@ -23,14 +23,14 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
 # Detailed summary of programming:
 - This is a detailed explanation of how I programmed PCA from scratch.
 
-`def __init__(self, n_components: int = None) -> None:
-        self.n_components = n_components`
+        `def __init__(self, n_components: int = None) -> None:
+                self.n_components = n_components`
 - A super important part before we begin is to normalize the data which can be done by scaling the matrix by the mean of the dataset: 
         `def transform(self, X: np.array) -> np.array: 
-        #normalize
-        X=X-np.mean(X)
-        X_pca = np.dot(X, self.components)
-        return X_pca`
+                #normalize
+                X=X-np.mean(X)
+                X_pca = np.dot(X, self.components)
+                return X_pca`
 - Now we can ensure that the data will not have scaling issues i.e. the values don't really matter 1 means the same as 5. 
 - This part of the code initializes how many components we are going to be working with
 - In PCA, this determines the dimensions of the dataset that we are working with.
