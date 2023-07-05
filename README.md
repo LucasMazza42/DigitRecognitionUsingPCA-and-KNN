@@ -38,5 +38,35 @@ The model was able to achieve about 97% accuracy in training and a 95 percent ac
 - A good way to show this is with a heatmap: 
 <img width="883" alt="Screenshot 2023-07-04 at 5 27 02 PM" src="https://github.com/LucasMazza42/DigitRecognitionUsingPCA-and-KNN/assets/47802441/0200cc7f-c437-44b8-8717-6b9ab2b80697">
 
+- Next, we have the computation of the eigenvectors and eigenvalues:
+          - The eigenvalues represent the amount of variance captured by each component.
+          - Thus, higher eigenvalues mean that that specific component captures more variance in the data.
+          - The eigenvectors with the highest eigenvalue represent our principal components.
+- This process can be represented by this code:
+  `def eigenValueVec(self, covMatrix)-> tuple: 
+        eigen_values, eigen_vectors = np.linalg.eig(covMatrix)
+        return (eigen_values.real, eigen_vectors.real)`
+- Next, we have the explained variance ratio:
+
+`def explained_varience_ratio(self, X)->None: 
+        
+        covarienceMat = self.findCovMatrix(X)
+        eigen_values, eigen_vectors = self.eigenValueVec(covarienceMat)
+
+        total_egnvalues = sum(eigen_values)
+        explained_variance_ratio = [(i/total_egnvalues) for i in eigen_values]
+       
+        explained_variance_ratio = explained_variance_ratio[0:100]
+        #we can use 50 components here
+
+        #plot the explainedVarience
+        plt.plot(explained_variance_ratio,
+             label='Explained Variance Ratio')
+
+        plt.xlabel('Principal Component')
+        plt.ylabel('Explained Variance Ratio')
+        plt.legend()
+        plt.show() ` 
+
 
 
